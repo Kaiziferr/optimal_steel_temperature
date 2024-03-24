@@ -1,6 +1,7 @@
 from unicodedata import normalize
 
 import pandas as pd
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 
@@ -40,3 +41,22 @@ def normalize_name_columns(columns):
   """Normaliza columnas"""
   columns = list(map(lambda x: normalize_word(x), columns))
   return columns
+
+
+  
+def null_features_per_record(data, figsize=(9,8), **kwargs):
+  """Identifica el número de caracteristicas nulas por registro"""
+  plt.figure(figsize=figsize)
+  (
+      data
+      .isnull()
+      .transpose()
+      .pipe(
+          lambda df: (
+              sns.heatmap(
+                  data = df
+                  
+              ).set(**kwargs)
+          )
+      )
+  )
